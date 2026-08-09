@@ -37,12 +37,20 @@ export default function NoteDetailsClient({
   return (
     <Modal onClose={handleClose}>
       <div className={css.container}>
-        <div className={css.item}>
-          <button onClick={handleClose}>Go Back</button>
+        <button onClick={handleClose} className={css.closeButton}>
+          Go Back
+        </button>
 
+        <div className={css.item}>
           <h1 className={css.header}>{note.title}</h1>
 
           <p className={css.content}>{note.content}</p>
+
+          <p className={css.tag}>{note.tag}</p>
+
+          <p className={css.date}>
+            {new Date(note.createdAt).toLocaleDateString()}
+          </p>
         </div>
       </div>
     </Modal>
