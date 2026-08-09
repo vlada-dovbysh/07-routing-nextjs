@@ -38,6 +38,11 @@ export default function NotesClient({ tag }: NotesClientProps) {
     refetchOnMount: false,
   });
 
+  const handleSearchChange = (query: string) => {
+    setQuery(query);
+    setPage(1);
+  };
+
   const handleCreateNote = () => {
     setIsModal(true);
   };
@@ -51,14 +56,16 @@ export default function NotesClient({ tag }: NotesClientProps) {
       <header className={css.toolbar}>
         <SearchBox
           value={query}
-          onChange={(query: string) => setQuery(query)}
+          onChange={handleSearchChange}
         />
 
         {isSuccess && data.totalPages > 1 && (
           <Pagination
             pageCount={data.totalPages}
             currentPage={page}
-            onPageChange={(selectedPage: number) => setPage(selectedPage)}
+            onPageChange={(selectedPage: number) =>
+              setPage(selectedPage)
+            }
           />
         )}
 
@@ -77,7 +84,9 @@ export default function NotesClient({ tag }: NotesClientProps) {
 
       {isError && <ErrorMessage />}
 
-      {isSuccess && data.notes.length === 0 && <p>No notes found.</p>}
+      {isSuccess && data.notes.length === 0 && (
+        <p>No notes found.</p>
+      )}
 
       {isSuccess && data.notes.length > 0 && (
         <NoteList notes={data.notes} />
